@@ -32,7 +32,7 @@ export default async function DashboardPage({ searchParams }: Props) {
 
   const existingRecords = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a) => a.id) },
+      agentId: { in: agents.map((a: { id: string }) => a.id) },
       date: targetDate,
     },
   });

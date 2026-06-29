@@ -41,7 +41,7 @@ export default async function AdminPage({ searchParams }: Props) {
 
   const records = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a) => a.id) },
+      agentId: { in: agents.map((a: { id: string }) => a.id) },
       date: targetDate,
     },
   });
