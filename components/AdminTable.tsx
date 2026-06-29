@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { AttendanceStatus } from "@prisma/client";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
+
+type AttendanceStatus = "PRESENT" | "ABSENT";
 import CustomSelect from "@/components/ui/CustomSelect";
 
 interface Agent {

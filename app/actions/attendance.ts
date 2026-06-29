@@ -4,11 +4,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { AttendanceStatus } from "@prisma/client";
 
 export interface AgentAttendanceInput {
   agentId: string;
-  status: AttendanceStatus;
+  status: "PRESENT" | "ABSENT";
 }
 
 export async function submitAttendance(

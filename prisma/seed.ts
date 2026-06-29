@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
@@ -17,15 +17,15 @@ async function main() {
   const agentPassword = await bcrypt.hash("agent123", 10);
 
   const tl1 = await prisma.user.create({
-    data: { name: "Team Lead 1", email: "tl1@company.com", password: tlPassword, role: Role.TL },
+    data: { name: "Team Lead 1", email: "tl1@company.com", password: tlPassword, role: "TL" },
   });
 
   const tl2 = await prisma.user.create({
-    data: { name: "Team Lead 2", email: "tl2@company.com", password: tlPassword, role: Role.TL },
+    data: { name: "Team Lead 2", email: "tl2@company.com", password: tlPassword, role: "TL" },
   });
 
   await prisma.user.create({
-    data: { name: "Anand M", email: "anand.m@myfrido.com", password: adminPassword, role: Role.ADMIN },
+    data: { name: "Anand M", email: "anand.m@myfrido.com", password: adminPassword, role: "ADMIN" },
   });
 
   const tl1Agents = ["Alice Johnson", "Bob Smith", "Carol White", "David Brown"];
@@ -37,7 +37,7 @@ async function main() {
         name,
         email: `${name.toLowerCase().replace(" ", ".")}@company.com`,
         password: agentPassword,
-        role: Role.TL,
+        role: "TL",
         teamLeadId: tl1.id,
       },
     });
@@ -49,7 +49,7 @@ async function main() {
         name,
         email: `${name.toLowerCase().replace(" ", ".")}@company.com`,
         password: agentPassword,
-        role: Role.TL,
+        role: "TL",
         teamLeadId: tl2.id,
       },
     });

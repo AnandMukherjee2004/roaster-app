@@ -3,8 +3,9 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { submitAttendance } from "@/app/actions/attendance";
-import { AttendanceStatus } from "@prisma/client";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
+
+type AttendanceStatus = "PRESENT" | "ABSENT";
 
 interface Agent {
   id: string;
