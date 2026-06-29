@@ -30,11 +30,10 @@ export default async function AdminPage({ searchParams }: Props) {
     include: { agents: true },
   });
 
-  const agentFilter: any = { teamLeadId: { not: null } };
-  if (selectedTL) agentFilter.teamLeadId = selectedTL;
-
   const agents = await prisma.user.findMany({
-    where: agentFilter,
+    where: selectedTL
+      ? { teamLeadId: selectedTL }
+      : { teamLeadId: { not: null } },
     orderBy: { name: "asc" },
     include: { teamLead: true },
   });
