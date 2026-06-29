@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
-
-type AttendanceStatus = "PRESENT" | "ABSENT";
 import CustomSelect from "@/components/ui/CustomSelect";
+import type { AttendanceStatus } from "@/types/attendance";
 
 interface Agent {
   id: string;

@@ -4,8 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { submitAttendance } from "@/app/actions/attendance";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
-
-type AttendanceStatus = "PRESENT" | "ABSENT";
+import type { AttendanceStatus } from "@/types/attendance";
 
 interface Agent {
   id: string;

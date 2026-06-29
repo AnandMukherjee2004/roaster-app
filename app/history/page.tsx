@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import DatePicker from "@/components/DatePicker";
 import Link from "next/link";
+import type { AttendanceRecordStatus } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string }>;
@@ -26,7 +27,7 @@ export default async function HistoryPage({ searchParams }: Props) {
     orderBy: { name: "asc" },
   });
 
-  const records = await prisma.attendanceRecord.findMany({
+  const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
       agentId: { in: agents.map((a: { id: string }) => a.id) },
       date: targetDate,

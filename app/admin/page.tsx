@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import AdminTable from "@/components/AdminTable";
+import type { AttendanceRecordStatus } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string; tl?: string }>;
@@ -38,7 +39,7 @@ export default async function AdminPage({ searchParams }: Props) {
     include: { teamLead: true },
   });
 
-  const records = await prisma.attendanceRecord.findMany({
+  const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
       agentId: { in: agents.map((a: { id: string }) => a.id) },
       date: targetDate,
@@ -51,7 +52,7 @@ export default async function AdminPage({ searchParams }: Props) {
     id: agent.id,
     name: agent.name,
     email: agent.email,
-    teamLeadName: agent.teamLead?.name ?? "—",
+    teamLeadName: agent.teamLead?.name ?? "-",
     teamLeadId: agent.teamLeadId ?? "",
     status: recordMap.get(agent.id) ?? null,
   }));

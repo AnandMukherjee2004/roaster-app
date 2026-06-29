@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import HistoryFilters from "@/components/HistoryFilters";
+import type { AttendanceRecordStatus } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string; tl?: string }>;
@@ -34,7 +35,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
     include: { teamLead: true },
   });
 
-  const records = await prisma.attendanceRecord.findMany({
+  const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
       agentId: { in: agents.map((a: { id: string }) => a.id) },
       date: targetDate,
@@ -94,7 +95,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
                           <p className="font-medium text-gray-900">{agent.name}</p>
                           <p className="text-xs text-gray-400">{agent.email}</p>
                         </td>
-                        <td className="px-4 py-3 text-gray-600">{agent.teamLead?.name ?? "—"}</td>
+                        <td className="px-4 py-3 text-gray-600">{agent.teamLead?.name ?? "-"}</td>
                         <td className="px-4 py-3">
                           {status ? (
                             <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
