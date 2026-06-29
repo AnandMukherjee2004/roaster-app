@@ -11,6 +11,18 @@ interface Props {
   searchParams: Promise<{ date?: string; tl?: string }>;
 }
 
+type TeamLeadSummary = {
+  id: string;
+  name: string;
+};
+
+type AgentWithTeamLead = {
+  id: string;
+  name: string;
+  email: string;
+  teamLead: TeamLeadSummary | null;
+};
+
 export default async function AdminHistoryPage({ searchParams }: Props) {
   const { date, tl } = await searchParams;
   const session = await getServerSession(authOptions);
@@ -22,17 +34,23 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
   const selectedTL = tl || "";
   const targetDate = new Date(selectedDate + "T00:00:00.000Z");
 
-  const teamLeads = await prisma.user.findMany({
+  const teamLeads: TeamLeadSummary[] = await prisma.user.findMany({
     where: { role: "TL", teamLeadId: null },
     orderBy: { name: "asc" },
+    select: { id: true, name: true },
   });
 
-  const agents = await prisma.user.findMany({
+  const agents: AgentWithTeamLead[] = await prisma.user.findMany({
     where: selectedTL
       ? { teamLeadId: selectedTL }
       : { teamLeadId: { not: null } },
     orderBy: { name: "asc" },
-    include: { teamLead: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      teamLead: { select: { id: true, name: true } },
+    },
   });
 
   const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
