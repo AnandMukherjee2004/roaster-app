@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import AdminTable from "@/components/AdminTable";
-import type { AttendanceRecordStatus } from "@/types/attendance";
+import type { AgentWithTeamLead, AttendanceRecordStatus, TeamLeadSummary } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string; tl?: string }>;
@@ -22,26 +22,32 @@ export default async function AdminPage({ searchParams }: Props) {
   const selectedTL = tl || "";
   const targetDate = new Date(selectedDate + "T00:00:00.000Z");
 
-  const teamLeads = await prisma.user.findMany({
+  const teamLeads: TeamLeadSummary[] = await prisma.user.findMany({
     where: {
       role: "TL",
       teamLeadId: null,
     },
     orderBy: { name: "asc" },
-    include: { agents: true },
+    select: { id: true, name: true },
   });
 
-  const agents = await prisma.user.findMany({
+  const agents: AgentWithTeamLead[] = await prisma.user.findMany({
     where: selectedTL
       ? { teamLeadId: selectedTL }
       : { teamLeadId: { not: null } },
     orderBy: { name: "asc" },
-    include: { teamLead: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      teamLeadId: true,
+      teamLead: { select: { id: true, name: true } },
+    },
   });
 
   const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a: { id: string }) => a.id) },
+      agentId: { in: agents.map((a) => a.id) },
       date: targetDate,
     },
   });

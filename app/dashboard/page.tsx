@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import AttendanceForm from "@/components/AttendanceForm";
-import type { AttendanceRecordStatus } from "@/types/attendance";
+import type { AgentSummary, AttendanceRecordStatus } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string }>;
@@ -24,16 +24,17 @@ export default async function DashboardPage({ searchParams }: Props) {
   minDate.setDate(minDate.getDate() - 7);
   const minDateStr = formatDate(minDate);
 
-  const agents = await prisma.user.findMany({
+  const agents: AgentSummary[] = await prisma.user.findMany({
     where: { teamLeadId: session.user.id },
     orderBy: { name: "asc" },
+    select: { id: true, name: true, email: true },
   });
 
   const targetDate = new Date(selectedDate + "T00:00:00.000Z");
 
   const existingRecords: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a: { id: string }) => a.id) },
+      agentId: { in: agents.map((a) => a.id) },
       date: targetDate,
     },
   });

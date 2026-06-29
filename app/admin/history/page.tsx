@@ -5,23 +5,11 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import HistoryFilters from "@/components/HistoryFilters";
-import type { AttendanceRecordStatus } from "@/types/attendance";
+import type { AgentWithTeamLead, AttendanceRecordStatus, TeamLeadSummary } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string; tl?: string }>;
 }
-
-type TeamLeadSummary = {
-  id: string;
-  name: string;
-};
-
-type AgentWithTeamLead = {
-  id: string;
-  name: string;
-  email: string;
-  teamLead: TeamLeadSummary | null;
-};
 
 export default async function AdminHistoryPage({ searchParams }: Props) {
   const { date, tl } = await searchParams;
@@ -49,13 +37,14 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
       id: true,
       name: true,
       email: true,
+      teamLeadId: true,
       teamLead: { select: { id: true, name: true } },
     },
   });
 
   const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a: { id: string }) => a.id) },
+      agentId: { in: agents.map((a) => a.id) },
       date: targetDate,
     },
   });

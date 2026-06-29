@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import type { AttendanceStatus } from "@/types/attendance";
+import type { AgentSummary, AttendanceStatus } from "@/types/attendance";
 
 export interface AgentAttendanceInput {
   agentId: string;
@@ -22,11 +22,11 @@ export async function submitAttendance(
 
   const tlId = session.user.id;
 
-  const agents = await prisma.user.findMany({
+  const agents: Pick<AgentSummary, "id">[] = await prisma.user.findMany({
     where: { teamLeadId: tlId },
     select: { id: true },
   });
-  const agentIds = new Set(agents.map((a: { id: string }) => a.id));
+  const agentIds = new Set(agents.map((a) => a.id));
 
   for (const record of records) {
     if (!agentIds.has(record.agentId)) {

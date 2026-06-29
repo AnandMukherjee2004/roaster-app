@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import DatePicker from "@/components/DatePicker";
 import Link from "next/link";
-import type { AttendanceRecordStatus } from "@/types/attendance";
+import type { AgentSummary, AttendanceRecordStatus } from "@/types/attendance";
 
 interface Props {
   searchParams: Promise<{ date?: string }>;
@@ -22,14 +22,15 @@ export default async function HistoryPage({ searchParams }: Props) {
   const selectedDate = date || today;
   const targetDate = new Date(selectedDate + "T00:00:00.000Z");
 
-  const agents = await prisma.user.findMany({
+  const agents: AgentSummary[] = await prisma.user.findMany({
     where: { teamLeadId: session.user.id },
     orderBy: { name: "asc" },
+    select: { id: true, name: true, email: true },
   });
 
   const records: AttendanceRecordStatus[] = await prisma.attendanceRecord.findMany({
     where: {
-      agentId: { in: agents.map((a: { id: string }) => a.id) },
+      agentId: { in: agents.map((a) => a.id) },
       date: targetDate,
     },
     include: { agent: true },
