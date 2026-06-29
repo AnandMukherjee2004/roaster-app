@@ -25,7 +25,7 @@ export async function submitAttendance(
     where: { teamLeadId: tlId },
     select: { id: true },
   });
-  const agentIds = new Set(agents.map((a) => a.id));
+  const agentIds = new Set(agents.map((a: { id: string }) => a.id));
 
   for (const record of records) {
     if (!agentIds.has(record.agentId)) {
