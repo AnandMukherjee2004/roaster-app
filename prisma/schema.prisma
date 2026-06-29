@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  TL
+  ADMIN
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       Role
+  teamLeadId String?
+
+  teamLead   User?    @relation("TLAgents", fields: [teamLeadId], references: [id])
+  agents     User[]   @relation("TLAgents")
+
+  markedAttendances AttendanceRecord[] @relation("MarkedBy")
+  attendanceRecords AttendanceRecord[] @relation("AgentAttendance")
+
+  createdAt  DateTime @default(now())
+}
+
+model AttendanceRecord {
+  id         String           @id @default(cuid())
+  agentId    String
+  markedById String
+  date       DateTime         @db.Date
+  status     AttendanceStatus
+  createdAt  DateTime         @default(now())
+
+  agent      User             @relation("AgentAttendance", fields: [agentId], references: [id])
+  markedBy   User             @relation("MarkedBy", fields: [markedById], references: [id])
+
+  @@unique([agentId, date])
+}

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Attendance Manager
 
-## Getting Started
+Team attendance tracking system for Team Leads and Admins.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Install PostgreSQL
+If not already installed, download from https://www.postgresql.org/download/windows/
+
+### 2. Create the database
+Open pgAdmin or psql and run:
+```sql
+CREATE DATABASE attendance_db;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Configure environment
+Copy `.env.example` to `.env` and update the `DATABASE_URL` with your PostgreSQL credentials:
+```
+DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/attendance_db"
+NEXTAUTH_SECRET="any-random-string-here"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Run migrations
+```bash
+npx prisma migrate dev --name init
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Seed the database
+```bash
+npm run db:seed
+```
 
-## Learn More
+### 6. Start the app
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Demo Accounts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Role  | Email               | Password |
+|-------|---------------------|----------|
+| Admin | admin@company.com   | admin123 |
+| TL 1  | tl1@company.com     | tl123    |
+| TL 2  | tl2@company.com     | tl123    |
 
-## Deploy on Vercel
+## Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **TL Dashboard** — mark agents Present/Absent, bulk mark all, date picker (up to 7 days back), submit/update attendance
+- **Admin Dashboard** — view all agents with attendance status, filter by TL or date, summary cards
+- **History** — browse past attendance records by date
+- **Auth** — NextAuth.js with credentials, JWT sessions, route protection via middleware
