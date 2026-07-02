@@ -11,7 +11,8 @@
 
 export const Role = {
   TL: 'TL',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER'
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
@@ -19,7 +20,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 export const AttendanceStatus = {
   PRESENT: 'PRESENT',
-  ABSENT: 'ABSENT'
+  ABSENT: 'ABSENT',
+  HALF_DAY: 'HALF_DAY'
 } as const
 
 export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]

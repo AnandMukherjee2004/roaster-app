@@ -15,7 +15,7 @@ export default async function AdminPage({ searchParams }: Props) {
   const { date, tl } = await searchParams;
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
-  if (session.user.role !== "ADMIN") redirect("/dashboard");
+  if (session.user.role !== "ADMIN" && session.user.role !== "MANAGER") redirect("/dashboard");
 
   const today = formatDate(new Date());
   const selectedDate = date || today;
@@ -25,7 +25,10 @@ export default async function AdminPage({ searchParams }: Props) {
   const teamLeads: TeamLeadSummary[] = await prisma.user.findMany({
     where: {
       role: "TL",
-      teamLeadId: null,
+      OR: [
+        { teamLeadId: null },
+        { teamLead: { role: "MANAGER" } }
+      ]
     },
     orderBy: { name: "asc" },
     select: { id: true, name: true },
@@ -34,7 +37,7 @@ export default async function AdminPage({ searchParams }: Props) {
   const agents: AgentWithTeamLead[] = await prisma.user.findMany({
     where: selectedTL
       ? { teamLeadId: selectedTL }
-      : { teamLeadId: { not: null } },
+      : { teamLead: { role: "TL" } },
     orderBy: { name: "asc" },
     select: {
       id: true,
@@ -64,12 +67,13 @@ export default async function AdminPage({ searchParams }: Props) {
   }));
 
   const present = records.filter((r) => r.status === "PRESENT").length;
+  const halfDay = records.filter((r) => r.status === "HALF_DAY").length;
   const absent = records.filter((r) => r.status === "ABSENT").length;
   const notMarked = agents.length - records.length;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar userName={session.user.name} role="ADMIN" />
+      <Navbar userName={session.user.name} role={session.user.role as any} />
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
@@ -77,10 +81,11 @@ export default async function AdminPage({ searchParams }: Props) {
         </div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
           {[
             { label: "Total Agents", value: agents.length, color: "text-gray-900" },
             { label: "Present", value: present, color: "text-green-600" },
+            { label: "Half Day", value: halfDay, color: "text-blue-600" },
             { label: "Absent", value: absent, color: "text-red-500" },
             { label: "Not Marked", value: notMarked, color: "text-amber-500" },
           ].map((card) => (

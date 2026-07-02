@@ -1,6 +1,6 @@
 import "next-auth";
 
-type Role = "TL" | "ADMIN";
+type Role = "TL" | "ADMIN" | "MANAGER";
 
 declare module "next-auth" {
   interface Session {

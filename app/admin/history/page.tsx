@@ -15,7 +15,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
   const { date, tl } = await searchParams;
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
-  if (session.user.role !== "ADMIN") redirect("/dashboard");
+  if (session.user.role !== "ADMIN" && session.user.role !== "MANAGER") redirect("/dashboard");
 
   const today = formatDate(new Date());
   const selectedDate = date || today;
@@ -23,7 +23,13 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
   const targetDate = new Date(selectedDate + "T00:00:00.000Z");
 
   const teamLeads: TeamLeadSummary[] = await prisma.user.findMany({
-    where: { role: "TL", teamLeadId: null },
+    where: {
+      role: "TL",
+      OR: [
+        { teamLeadId: null },
+        { teamLead: { role: "MANAGER" } }
+      ]
+    },
     orderBy: { name: "asc" },
     select: { id: true, name: true },
   });
@@ -31,7 +37,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
   const agents: AgentWithTeamLead[] = await prisma.user.findMany({
     where: selectedTL
       ? { teamLeadId: selectedTL }
-      : { teamLeadId: { not: null } },
+      : { teamLead: { role: "TL" } },
     orderBy: { name: "asc" },
     select: {
       id: true,
@@ -51,6 +57,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
 
   const recordMap = new Map(records.map((r) => [r.agentId, r.status]));
   const present = records.filter((r) => r.status === "PRESENT").length;
+  const halfDay = records.filter((r) => r.status === "HALF_DAY").length;
   const absent = records.filter((r) => r.status === "ABSENT").length;
 
   const minDate = new Date();
@@ -58,7 +65,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar userName={session.user.name} role="ADMIN" />
+      <Navbar userName={session.user.name} role={session.user.role as any} />
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-gray-900">Attendance History</h1>
@@ -76,6 +83,7 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
         {records.length > 0 && (
           <div className="flex items-center gap-4 text-sm mb-4">
             <span className="text-green-600 font-medium">{present} Present</span>
+            <span className="text-blue-600 font-medium">{halfDay} Half Day</span>
             <span className="text-red-500 font-medium">{absent} Absent</span>
           </div>
         )}
@@ -103,12 +111,17 @@ export default async function AdminHistoryPage({ searchParams }: Props) {
                           <p className="text-xs text-gray-400">{agent.email}</p>
                         </td>
                         <td className="px-4 py-3 text-gray-600">{agent.teamLead?.name ?? "-"}</td>
+
                         <td className="px-4 py-3">
                           {status ? (
                             <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                              status === "PRESENT" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"
+                              status === "PRESENT"
+                                ? "bg-green-100 text-green-700"
+                                : status === "HALF_DAY"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-red-100 text-red-600"
                             }`}>
-                              {status === "PRESENT" ? "Present" : "Absent"}
+                              {status === "PRESENT" ? "Present" : status === "HALF_DAY" ? "Half Day" : "Absent"}
                             </span>
                           ) : (
                             <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-gray-100 text-gray-400">

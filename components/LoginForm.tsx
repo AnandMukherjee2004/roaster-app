@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,6 +17,7 @@ export default function LoginForm() {
     const result = await signIn("credentials", {
       email,
       password,
+      callbackUrl: "/",
       redirect: false,
     });
 
@@ -29,8 +28,8 @@ export default function LoginForm() {
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    // Use window.location for a hard navigation so the server session is fresh
+    window.location.href = result?.url ?? "/";
   }
 
   return (

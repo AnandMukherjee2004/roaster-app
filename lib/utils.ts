@@ -8,6 +8,11 @@ export function toLocalDate(dateStr: string): Date {
   return new Date(year, month - 1, day);
 }
 
+export function formatCurrency(amount: number | null): string {
+  if (amount === null) return "-";
+  return `₹${amount.toLocaleString("en-IN")}`;
+}
+
 export function getDateRange(days: number): string[] {
   const dates: string[] = [];
   for (let i = 0; i < days; i++) {

@@ -10,11 +10,13 @@ datasource db {
 enum Role {
   TL
   ADMIN
+  MANAGER
 }
 
 enum AttendanceStatus {
   PRESENT
   ABSENT
+  HALF_DAY
 }
 
 model User {

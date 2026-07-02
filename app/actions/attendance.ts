@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { formatDate } from "@/lib/utils";
 import type { AgentSummary, AttendanceStatus } from "@/types/attendance";
 
 export interface AgentAttendanceInput {
@@ -16,21 +17,43 @@ export async function submitAttendance(
   records: AgentAttendanceInput[]
 ) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "TL") {
+  if (!session || (session.user.role !== "TL" && session.user.role !== "MANAGER" && session.user.role !== "ADMIN")) {
     return { error: "Unauthorized" };
   }
 
-  const tlId = session.user.id;
+  const todayStr = formatDate(new Date());
+  if (date !== todayStr && session.user.role !== "ADMIN") {
+    return { error: "Only admins can mark or update attendance for previous days." };
+  }
 
-  const agents: Pick<AgentSummary, "id">[] = await prisma.user.findMany({
-    where: { teamLeadId: tlId },
-    select: { id: true },
-  });
-  const agentIds = new Set(agents.map((a) => a.id));
+  const userId = session.user.id;
 
-  for (const record of records) {
-    if (!agentIds.has(record.agentId)) {
-      return { error: "Unauthorized agent" };
+  if (session.user.role !== "ADMIN") {
+    let allowedAgentIds: Set<string>;
+
+    if (session.user.role === "MANAGER") {
+      const directAndIndirect = await prisma.user.findMany({
+        where: {
+          OR: [
+            { teamLeadId: userId },
+            { teamLead: { teamLeadId: userId } },
+          ],
+        },
+        select: { id: true },
+      });
+      allowedAgentIds = new Set(directAndIndirect.map((u) => u.id));
+    } else {
+      const agents = await prisma.user.findMany({
+        where: { teamLeadId: userId },
+        select: { id: true },
+      });
+      allowedAgentIds = new Set(agents.map((a) => a.id));
+    }
+
+    for (const record of records) {
+      if (!allowedAgentIds.has(record.agentId)) {
+        return { error: "Unauthorized agent" };
+      }
     }
   }
 
@@ -48,11 +71,11 @@ export async function submitAttendance(
           },
           update: {
             status: record.status,
-            markedById: tlId,
+            markedById: userId,
           },
           create: {
             agentId: record.agentId,
-            markedById: tlId,
+            markedById: userId,
             date: targetDate,
             status: record.status,
           },

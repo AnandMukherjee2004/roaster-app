@@ -1,4 +1,4 @@
-export type AttendanceStatus = "PRESENT" | "ABSENT";
+export type AttendanceStatus = "PRESENT" | "ABSENT" | "HALF_DAY";
 
 export type AttendanceRecordStatus = {
   agentId: string;
