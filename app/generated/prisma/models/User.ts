@@ -31,6 +31,8 @@ export type UserMinAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   teamLeadId: string | null
+  joiningDate: Date | null
+  empId: string | null
   createdAt: Date | null
 }
 
@@ -41,6 +43,8 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   teamLeadId: string | null
+  joiningDate: Date | null
+  empId: string | null
   createdAt: Date | null
 }
 
@@ -51,6 +55,8 @@ export type UserCountAggregateOutputType = {
   password: number
   role: number
   teamLeadId: number
+  joiningDate: number
+  empId: number
   createdAt: number
   _all: number
 }
@@ -63,6 +69,8 @@ export type UserMinAggregateInputType = {
   password?: true
   role?: true
   teamLeadId?: true
+  joiningDate?: true
+  empId?: true
   createdAt?: true
 }
 
@@ -73,6 +81,8 @@ export type UserMaxAggregateInputType = {
   password?: true
   role?: true
   teamLeadId?: true
+  joiningDate?: true
+  empId?: true
   createdAt?: true
 }
 
@@ -83,6 +93,8 @@ export type UserCountAggregateInputType = {
   password?: true
   role?: true
   teamLeadId?: true
+  joiningDate?: true
+  empId?: true
   createdAt?: true
   _all?: true
 }
@@ -166,6 +178,8 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.Role
   teamLeadId: string | null
+  joiningDate: Date | null
+  empId: string | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -197,6 +211,8 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   teamLeadId?: Prisma.StringNullableFilter<"User"> | string | null
+  joiningDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  empId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   teamLead?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   agents?: Prisma.UserListRelationFilter
@@ -211,6 +227,8 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   teamLeadId?: Prisma.SortOrderInput | Prisma.SortOrder
+  joiningDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  empId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   teamLead?: Prisma.UserOrderByWithRelationInput
   agents?: Prisma.UserOrderByRelationAggregateInput
@@ -228,6 +246,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   teamLeadId?: Prisma.StringNullableFilter<"User"> | string | null
+  joiningDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  empId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   teamLead?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   agents?: Prisma.UserListRelationFilter
@@ -242,6 +262,8 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   teamLeadId?: Prisma.SortOrderInput | Prisma.SortOrder
+  joiningDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  empId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -258,6 +280,8 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   teamLeadId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  joiningDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  empId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -267,6 +291,8 @@ export type UserCreateInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
@@ -281,6 +307,8 @@ export type UserUncheckedCreateInput = {
   password: string
   role: $Enums.Role
   teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
@@ -293,6 +321,8 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
@@ -307,6 +337,8 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -320,6 +352,8 @@ export type UserCreateManyInput = {
   password: string
   role: $Enums.Role
   teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
 }
 
@@ -329,6 +363,8 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -339,6 +375,8 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -364,6 +402,8 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   teamLeadId?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
+  empId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -374,6 +414,8 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   teamLeadId?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
+  empId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -384,6 +426,8 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   teamLeadId?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
+  empId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -420,6 +464,14 @@ export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -446,10 +498,6 @@ export type UserUpdateManyWithoutTeamLeadNestedInput = {
   update?: Prisma.UserUpdateWithWhereUniqueWithoutTeamLeadInput | Prisma.UserUpdateWithWhereUniqueWithoutTeamLeadInput[]
   updateMany?: Prisma.UserUpdateManyWithWhereWithoutTeamLeadInput | Prisma.UserUpdateManyWithWhereWithoutTeamLeadInput[]
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type UserUncheckedUpdateManyWithoutTeamLeadNestedInput = {
@@ -500,6 +548,8 @@ export type UserCreateWithoutAgentsInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
@@ -513,6 +563,8 @@ export type UserUncheckedCreateWithoutAgentsInput = {
   password: string
   role: $Enums.Role
   teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
@@ -529,6 +581,8 @@ export type UserCreateWithoutTeamLeadInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
@@ -541,6 +595,8 @@ export type UserUncheckedCreateWithoutTeamLeadInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
@@ -574,6 +630,8 @@ export type UserUpdateWithoutAgentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
@@ -587,6 +645,8 @@ export type UserUncheckedUpdateWithoutAgentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
@@ -618,6 +678,8 @@ export type UserScalarWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   teamLeadId?: Prisma.StringNullableFilter<"User"> | string | null
+  joiningDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  empId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
@@ -627,6 +689,8 @@ export type UserCreateWithoutAttendanceRecordsInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
@@ -640,6 +704,8 @@ export type UserUncheckedCreateWithoutAttendanceRecordsInput = {
   password: string
   role: $Enums.Role
   teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
@@ -656,6 +722,8 @@ export type UserCreateWithoutMarkedAttendancesInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
@@ -669,6 +737,8 @@ export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
   password: string
   role: $Enums.Role
   teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
@@ -696,6 +766,8 @@ export type UserUpdateWithoutAttendanceRecordsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
@@ -709,6 +781,8 @@ export type UserUncheckedUpdateWithoutAttendanceRecordsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -731,6 +805,8 @@ export type UserUpdateWithoutMarkedAttendancesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
@@ -744,6 +820,8 @@ export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
@@ -755,6 +833,8 @@ export type UserCreateManyTeamLeadInput = {
   email: string
   password: string
   role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
   createdAt?: Date | string
 }
 
@@ -764,6 +844,8 @@ export type UserUpdateWithoutTeamLeadInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
@@ -776,6 +858,8 @@ export type UserUncheckedUpdateWithoutTeamLeadInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -788,6 +872,8 @@ export type UserUncheckedUpdateManyWithoutTeamLeadInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -847,6 +933,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   teamLeadId?: boolean
+  joiningDate?: boolean
+  empId?: boolean
   createdAt?: boolean
   teamLead?: boolean | Prisma.User$teamLeadArgs<ExtArgs>
   agents?: boolean | Prisma.User$agentsArgs<ExtArgs>
@@ -862,6 +950,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   teamLeadId?: boolean
+  joiningDate?: boolean
+  empId?: boolean
   createdAt?: boolean
   teamLead?: boolean | Prisma.User$teamLeadArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -873,6 +963,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   teamLeadId?: boolean
+  joiningDate?: boolean
+  empId?: boolean
   createdAt?: boolean
   teamLead?: boolean | Prisma.User$teamLeadArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -884,10 +976,12 @@ export type UserSelectScalar = {
   password?: boolean
   role?: boolean
   teamLeadId?: boolean
+  joiningDate?: boolean
+  empId?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "teamLeadId" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "teamLeadId" | "joiningDate" | "empId" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamLead?: boolean | Prisma.User$teamLeadArgs<ExtArgs>
   agents?: boolean | Prisma.User$agentsArgs<ExtArgs>
@@ -917,6 +1011,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.Role
     teamLeadId: string | null
+    joiningDate: Date | null
+    empId: string | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1351,6 +1447,8 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly teamLeadId: Prisma.FieldRef<"User", 'String'>
+  readonly joiningDate: Prisma.FieldRef<"User", 'DateTime'>
+  readonly empId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

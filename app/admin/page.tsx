@@ -43,6 +43,8 @@ export default async function AdminPage({ searchParams }: Props) {
       id: true,
       name: true,
       email: true,
+      joiningDate: true,
+      empId: true,
       teamLeadId: true,
       teamLead: { select: { id: true, name: true } },
     },
@@ -64,6 +66,8 @@ export default async function AdminPage({ searchParams }: Props) {
     teamLeadName: agent.teamLead?.name ?? "-",
     teamLeadId: agent.teamLeadId ?? "",
     status: recordMap.get(agent.id) ?? null,
+    joiningDate: agent.joiningDate?.toISOString() ?? null,
+    empId: agent.empId ?? null,
   }));
 
   const present = records.filter((r) => r.status === "PRESENT").length;

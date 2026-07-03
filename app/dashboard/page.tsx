@@ -58,24 +58,24 @@ export default async function DashboardPage({ searchParams }: Props) {
     agents = await prisma.user.findMany({
       where: { teamLeadId: selectedTLId },
       orderBy: { name: "asc" },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, empId: true },
     });
   } else if (isManager) {
     tls = await prisma.user.findMany({
       where: { teamLeadId: session.user.id },
       orderBy: { name: "asc" },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, empId: true },
     });
     agents = await prisma.user.findMany({
       where: { teamLead: { teamLeadId: session.user.id } },
       orderBy: { name: "asc" },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, empId: true },
     });
   } else {
     agents = await prisma.user.findMany({
       where: { teamLeadId: session.user.id },
       orderBy: { name: "asc" },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, empId: true },
     });
   }
 
@@ -101,6 +101,7 @@ export default async function DashboardPage({ searchParams }: Props) {
     name: agent.name,
     email: agent.email,
     status: recordMap.get(agent.id) ?? null,
+    empId: agent.empId ?? null,
   }));
 
   const agentsWithStatus = agents.map((agent) => ({
@@ -108,6 +109,7 @@ export default async function DashboardPage({ searchParams }: Props) {
     name: agent.name,
     email: agent.email,
     status: recordMap.get(agent.id) ?? null,
+    empId: agent.empId ?? null,
   }));
 
   const alreadySubmittedTLs = tls.length > 0 && tls.every((t) => recordMap.has(t.id));

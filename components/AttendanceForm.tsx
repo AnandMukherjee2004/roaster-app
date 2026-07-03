@@ -12,6 +12,7 @@ interface Agent {
   name: string;
   email: string;
   status: AttendanceStatus | null;
+  empId?: string | null;
 }
 
 interface Props {
@@ -231,40 +232,44 @@ export default function AttendanceForm({
             filteredAgents.map((agent) => (
               <div key={agent.id} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50/30 transition">
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{agent.name}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm font-medium text-gray-900">{agent.name}</p>
+                    {agent.empId && (
+                      <span className="text-sm bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded font-mono font-medium">
+                        {agent.empId}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs text-gray-400">{agent.email}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => !isReadOnly && setStatuses((p) => ({ ...p, [agent.id]: "PRESENT" }))}
                     disabled={isReadOnly}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                      statuses[agent.id] === "PRESENT"
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${statuses[agent.id] === "PRESENT"
                         ? "bg-green-500 text-white shadow-sm"
                         : "bg-gray-100 text-gray-500 disabled:opacity-40 hover:bg-green-50 hover:text-green-600"
-                    }`}
+                      }`}
                   >
                     Present
                   </button>
                   <button
                     onClick={() => !isReadOnly && setStatuses((p) => ({ ...p, [agent.id]: "HALF_DAY" }))}
                     disabled={isReadOnly}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                      statuses[agent.id] === "HALF_DAY"
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${statuses[agent.id] === "HALF_DAY"
                         ? "bg-blue-500 text-white shadow-sm"
                         : "bg-gray-100 text-gray-500 disabled:opacity-40 hover:bg-blue-50 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     Half Day
                   </button>
                   <button
                     onClick={() => !isReadOnly && setStatuses((p) => ({ ...p, [agent.id]: "ABSENT" }))}
                     disabled={isReadOnly}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                      statuses[agent.id] === "ABSENT"
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${statuses[agent.id] === "ABSENT"
                         ? "bg-red-500 text-white shadow-sm"
                         : "bg-gray-100 text-gray-500 disabled:opacity-40 hover:bg-red-50 hover:text-red-500"
-                    }`}
+                      }`}
                   >
                     Absent
                   </button>

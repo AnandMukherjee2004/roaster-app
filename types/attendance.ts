@@ -14,6 +14,8 @@ export type AgentSummary = {
   id: string;
   name: string;
   email: string;
+  joiningDate?: Date | null;
+  empId?: string | null;
 };
 
 export type AgentWithTeamLead = AgentSummary & {

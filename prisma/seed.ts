@@ -12,55 +12,95 @@ type AgentSeed = { name: string };
 
 const teams: { tl: string; agents: AgentSeed[] }[] = [
   {
-    tl: "Parvi D",
-    agents: [
-      { name: "Prerna" },
-      { name: "Aditya N" },
-      { name: "Asif J" },
-    ],
+    "tl": "Parvi D",
+    "agents": [
+      {
+        "name": "Prerna B"
+      },
+      {
+        "name": "Aditya N"
+      },
+      {
+        "name": "Asif J"
+      }
+    ]
   },
   {
-    tl: "Kaif M",
-    agents: [
-      { name: "Deepali T" },
-      { name: "Sanket" },
-      { name: "Sanskar S" },
-    ],
+    "tl": "Kaif M",
+    "agents": [
+      {
+        "name": "Deepali T"
+      },
+      {
+        "name": "Sanket C"
+      },
+      {
+        "name": "Sanskar S"
+      }
+    ]
   },
   {
-    tl: "Rohit B",
-    agents: [
-      { name: "Vansh" },
-      { name: "Prasad P" },
-      { name: "Vanshri" },
-      { name: "Yashika" },
-    ],
+    "tl": "Rohit B",
+    "agents": [
+      {
+        "name": "Vansh K"
+      },
+      {
+        "name": "Prasad P"
+      },
+      {
+        "name": "Vanshri M"
+      },
+      {
+        "name": "Yashika M"
+      }
+    ]
   },
   {
-    tl: "Nikhil K",
-    agents: [
-      { name: "Akriti" },
-      { name: "Aditya P" },
-      { name: "Vedika" },
-      { name: "Vimala" },
-    ],
+    "tl": "Nikhil K",
+    "agents": [
+      {
+        "name": "Akriti R"
+      },
+      {
+        "name": "Aditya P"
+      },
+      {
+        "name": "Vedika A"
+      },
+      {
+        "name": "Vimala C"
+      }
+    ]
   },
   {
-    tl: "Lajri P",
-    agents: [
-      { name: "Vivek S" },
-      { name: "Vrushali" },
-      { name: "Mangesh" },
-      { name: "Sonali" },
-    ],
+    "tl": "Lajri P",
+    "agents": [
+      {
+        "name": "Vivek S"
+      },
+      {
+        "name": "Vrushali P"
+      },
+      {
+        "name": "Mangesh G"
+      },
+      {
+        "name": "Sonali C"
+      }
+    ]
   },
   {
-    tl: "Sagan N",
-    agents: [
-      { name: "Bipasha" },
-      { name: "Sitesh K" },
-    ],
-  },
+    "tl": "Sagar N",
+    "agents": [
+      {
+        "name": "Bipasha S"
+      },
+      {
+        "name": "Sitesh K"
+      }
+    ]
+  }
 ];
 
 function slugify(name: string) {
@@ -77,6 +117,10 @@ async function main() {
 
   await prisma.user.create({
     data: { name: "Anand M", email: "anand.m@myfrido.com", password: adminPassword, role: "ADMIN" },
+  });
+
+  await prisma.user.create({
+    data: { name: "Sounak C", email: "sounak.c@myfrido.com", password: adminPassword, role: "ADMIN" },
   });
 
   const managerUser = await prisma.user.create({
@@ -121,6 +165,7 @@ async function main() {
 
   console.log("\n✅ Seed complete!\n");
   console.log("  Admin:    anand.m@myfrido.com  /  CRAxAnand@2004");
+  console.log("  Admin:    sounak.c@myfrido.com /  CRAxAnand@2004");
   console.log("  Manager:  ashwin.n@myfrido.com /  manager123");
   for (const team of teams) {
     const tlFirstWord = team.tl.split(" ")[0];

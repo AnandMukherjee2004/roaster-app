@@ -26,6 +26,8 @@ model User {
   password   String
   role       Role
   teamLeadId String?
+  joiningDate DateTime?
+  empId       String?
 
   teamLead   User?    @relation("TLAgents", fields: [teamLeadId], references: [id])
   agents     User[]   @relation("TLAgents")

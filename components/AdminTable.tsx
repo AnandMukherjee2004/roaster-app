@@ -14,6 +14,8 @@ interface Agent {
   teamLeadName: string;
   teamLeadId: string;
   status: AttendanceStatus | null;
+  joiningDate: string | null;
+  empId: string | null;
 }
 
 interface TL {
@@ -105,7 +107,9 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-100">
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Agent</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Employee ID</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Team Lead</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Joining Date</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Status</th>
                 </tr>
               </thead>
@@ -116,17 +120,20 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
                       <p className="font-medium text-gray-900">{agent.name}</p>
                       <p className="text-xs text-gray-400">{agent.email}</p>
                     </td>
+                    <td className="px-4 py-3 text-gray-600 font-mono text-md">{agent.empId ?? "-"}</td>
                     <td className="px-4 py-3 text-gray-600">{agent.teamLeadName}</td>
+                    <td className="px-4 py-3 text-gray-600">
+                      {agent.joiningDate ? new Date(agent.joiningDate).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "-"}
+                    </td>
 
                     <td className="px-4 py-3">
                       {agent.status ? (
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                          agent.status === "PRESENT"
-                            ? "bg-green-100 text-green-700"
-                            : agent.status === "HALF_DAY"
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${agent.status === "PRESENT"
+                          ? "bg-green-100 text-green-700"
+                          : agent.status === "HALF_DAY"
                             ? "bg-blue-100 text-blue-700"
                             : "bg-red-100 text-red-600"
-                        }`}>
+                          }`}>
                           {agent.status === "PRESENT" ? "Present" : agent.status === "HALF_DAY" ? "Half Day" : "Absent"}
                         </span>
                       ) : (
