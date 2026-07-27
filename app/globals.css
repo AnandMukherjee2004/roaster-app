@@ -9,11 +9,30 @@
 
 body {
   color: #111827;
-  background: #f9fafb;
+  background: #F8F7F4;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Custom sleek dark scrollbar */
+  .custom-scrollbar-dark::-webkit-scrollbar {
+    width: 5px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+    background: #555555;
+  }
+  .custom-scrollbar-dark {
+    scrollbar-width: thin;
+    scrollbar-color: #333333 transparent;
   }
 }

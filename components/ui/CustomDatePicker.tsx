@@ -95,7 +95,7 @@ export default function CustomDatePicker({ value, min, max, onChange, label }: P
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-2 bg-white border border-gray-100 rounded-xl shadow-lg p-3 w-64">
+        <div className="absolute z-30 mt-2 bg-white border border-stone-200/80 rounded-2xl shadow-xl p-3 w-64">
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
             <button type="button" onClick={prevMonth} className="p-1 rounded-md hover:bg-gray-100 transition text-gray-500">

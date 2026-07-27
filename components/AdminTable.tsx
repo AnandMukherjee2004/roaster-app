@@ -54,7 +54,7 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="bg-white border border-gray-100 rounded-xl p-4 flex flex-wrap gap-4 items-end">
+      <div className="bg-white border border-stone-200/60 rounded-2xl p-4 flex flex-wrap gap-3 items-end shadow-2xs">
         <CustomDatePicker
           value={selectedDate}
           max={today}
@@ -69,17 +69,17 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
           label="Filter by Team Lead"
         />
         <div className="flex-1 min-w-[200px]">
-          <label className="block text-xs font-medium text-gray-500 mb-1.5">Search Agents</label>
+          <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mb-1">Search Agents</label>
           <div className="relative">
             <input
               type="text"
               placeholder="Search by name, email or TL..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full pl-8 pr-3 h-8 sm:h-9 bg-[#F5F4F0] border border-stone-200/80 rounded-xl text-xs font-semibold text-[#111111] focus:bg-white focus:ring-1 focus:ring-[#E0533C] focus:outline-none transition-all"
             />
             <svg
-              className="w-4 h-4 text-gray-400 absolute left-3 top-3"
+              className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 sm:top-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -87,7 +87,7 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               />
             </svg>
@@ -96,48 +96,48 @@ export default function AdminTable({ agents, teamLeads, selectedDate, today, sel
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
+      <div className="bg-white border border-stone-200/60 rounded-2xl overflow-hidden shadow-2xs">
         {agents.length === 0 ? (
-          <p className="p-10 text-center text-sm text-gray-400">No agents found.</p>
+          <p className="p-10 text-center text-xs font-semibold text-stone-400">No agents found.</p>
         ) : filteredAgents.length === 0 ? (
-          <p className="p-10 text-center text-sm text-gray-400">No matching agents found.</p>
+          <p className="p-10 text-center text-xs font-semibold text-stone-400">No matching agents found.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-xs">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
-                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Agent</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Employee ID</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Team Lead</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Joining Date</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Status</th>
+                <tr className="bg-[#F8F7F4] text-stone-500 font-extrabold uppercase text-[10px] tracking-wider border-b border-stone-200/60">
+                  <th className="text-left px-5 py-3.5">Agent</th>
+                  <th className="text-left px-5 py-3.5">Employee ID</th>
+                  <th className="text-left px-5 py-3.5">Team Lead</th>
+                  <th className="text-left px-5 py-3.5">Joining Date</th>
+                  <th className="text-left px-5 py-3.5">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-stone-100">
                 {filteredAgents.map((agent) => (
-                  <tr key={agent.id} className="hover:bg-gray-50/50 transition">
-                    <td className="px-4 py-3">
-                      <p className="font-medium text-gray-900">{agent.name}</p>
-                      <p className="text-xs text-gray-400">{agent.email}</p>
+                  <tr key={agent.id} className="hover:bg-[#F8F7F4]/60 transition-colors">
+                    <td className="px-5 py-3.5">
+                      <p className="font-black text-[#111111] text-xs">{agent.name}</p>
+                      <p className="text-[10px] text-stone-400 font-normal">{agent.email}</p>
                     </td>
-                    <td className="px-4 py-3 text-gray-600 font-mono text-md">{agent.empId ?? "-"}</td>
-                    <td className="px-4 py-3 text-gray-600">{agent.teamLeadName}</td>
-                    <td className="px-4 py-3 text-gray-600">
+                    <td className="px-5 py-3.5 text-stone-600 font-mono text-xs font-bold">{agent.empId ?? "-"}</td>
+                    <td className="px-5 py-3.5 text-stone-600 font-semibold">{agent.teamLeadName}</td>
+                    <td className="px-5 py-3.5 text-stone-500 font-medium">
                       {agent.joiningDate ? new Date(agent.joiningDate).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : "-"}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3.5">
                       {agent.status ? (
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${agent.status === "PRESENT"
-                          ? "bg-green-100 text-green-700"
+                        <span className={`text-[11px] px-3 py-1 rounded-full font-extrabold border ${agent.status === "PRESENT"
+                          ? "bg-[#E8F5E9] text-[#0D5C3A] border-[#C8E6C9]/80"
                           : agent.status === "HALF_DAY"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-red-100 text-red-600"
+                            ? "bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]/80"
+                            : "bg-[#FEE2E2] text-[#B91C1C] border-[#FCA5A5]/80"
                           }`}>
                           {agent.status === "PRESENT" ? "Present" : agent.status === "HALF_DAY" ? "Half Day" : "Absent"}
                         </span>
                       ) : (
-                        <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-amber-50 text-amber-600">
+                        <span className="text-[11px] px-3 py-1 rounded-full font-medium bg-[#F3F4F6] text-[#4B5563] border border-[#E5E7EB]">
                           Not marked
                         </span>
                       )}

@@ -1,74 +1,126 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 
-interface Option {
+export interface CustomSelectOption {
   value: string;
   label: string;
+  subLabel?: string;
 }
 
-interface Props {
+interface CustomSelectProps {
   value: string;
-  options: Option[];
+  options: CustomSelectOption[];
   onChange: (val: string) => void;
   placeholder?: string;
   label?: string;
+  icon?: ReactNode;
+  fullWidth?: boolean;
+  className?: string;
 }
 
-export default function CustomSelect({ value, options, onChange, placeholder = "Select...", label }: Props) {
+export default function CustomSelect({
+  value,
+  options,
+  onChange,
+  placeholder = "Select...",
+  label,
+  icon,
+  fullWidth = false,
+  className = "",
+}: CustomSelectProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handler(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
     }
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selected = options.find(o => o.value === value);
+  const selectedOption = options.find((o) => o.value === value);
 
   return (
-    <div ref={ref} className="relative">
-      {label && <label className="block text-xs font-medium text-gray-500 mb-1">{label}</label>}
+    <div ref={ref} className={`relative inline-block ${fullWidth ? "w-full" : ""} ${className}`}>
+      {label && (
+        <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-wider mb-1">
+          {label}
+        </label>
+      )}
+
+      {/* SELECT TRIGGER BUTTON */}
       <button
         type="button"
-        onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white hover:border-indigo-300 hover:bg-indigo-50/30 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-w-44"
+        onClick={() => setOpen((prev) => !prev)}
+        className={`flex items-center justify-between gap-2.5 bg-[#F5F4F0] border border-stone-200/80 rounded-xl px-3 h-8 sm:h-9 text-xs font-semibold text-[#111111] hover:bg-[#EAE8E2] hover:border-stone-300 focus:outline-none focus:ring-1 focus:ring-[#E0533C] transition-all ${
+          fullWidth ? "w-full" : "min-w-[180px]"
+        }`}
       >
-        <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        <span className={selected ? "text-gray-800 flex-1 text-left" : "text-gray-400 flex-1 text-left"}>
-          {selected ? selected.label : placeholder}
-        </span>
-        <svg className={`w-3.5 h-3.5 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        <div className="flex items-center gap-2 truncate">
+          {icon ? (
+            <span className="text-stone-500">{icon}</span>
+          ) : (
+            <span className="w-2 h-2 rounded-full bg-[#E0533C] flex-shrink-0" />
+          )}
+          <span className="truncate">
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+        </div>
+
+        <svg
+          className={`w-3.5 h-3.5 text-stone-500 transition-transform duration-200 flex-shrink-0 ${
+            open ? "rotate-180 text-[#E0533C]" : ""
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
+      {/* DROPDOWN POPOVER MENU */}
       {open && (
-        <div className="absolute z-50 mt-2 bg-white border border-gray-100 rounded-xl shadow-lg py-1 min-w-full overflow-hidden">
-          {options.map(opt => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => { onChange(opt.value); setOpen(false); }}
-              className={`w-full text-left px-3 py-2 text-sm transition flex items-center gap-2
-                ${opt.value === value
-                  ? "bg-indigo-50 text-indigo-700 font-medium"
-                  : "text-gray-700 hover:bg-gray-50"
-                }`}
-            >
-              {opt.value === value && (
-                <svg className="w-3.5 h-3.5 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-              <span className={opt.value === value ? "" : "ml-5"}>{opt.label}</span>
-            </button>
-          ))}
+        <div className="absolute left-0 mt-2 w-full min-w-[200px] max-h-60 overflow-y-auto bg-white border border-stone-200/80 rounded-2xl shadow-[0_12px_36px_rgba(0,0,0,0.1)] py-1.5 z-30 animate-in fade-in zoom-in-95 duration-150 custom-scrollbar-dark">
+          {options.length === 0 ? (
+            <div className="px-4 py-2.5 text-xs text-stone-400 font-medium">No options available</div>
+          ) : (
+            options.map((opt) => {
+              const isSelected = opt.value === value;
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    onChange(opt.value);
+                    setOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2.5 text-xs font-bold transition flex items-center justify-between gap-2 ${
+                    isSelected
+                      ? "bg-[#E0533C]/10 text-[#E0533C]"
+                      : "text-[#111111] hover:bg-[#F8F7F4]"
+                  }`}
+                >
+                  <div className="flex flex-col truncate">
+                    <span>{opt.label}</span>
+                    {opt.subLabel && (
+                      <span className="text-[10px] text-stone-400 font-normal">{opt.subLabel}</span>
+                    )}
+                  </div>
+
+                  {isSelected && (
+                    <svg className="w-4 h-4 text-[#E0533C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })
+          )}
         </div>
       )}
     </div>

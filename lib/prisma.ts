@@ -8,6 +8,9 @@ function createClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma || createClient();
+export const prisma =
+  globalForPrisma.prisma && (globalForPrisma.prisma as any).auditRecord
+    ? globalForPrisma.prisma
+    : createClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

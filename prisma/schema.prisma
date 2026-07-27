@@ -35,6 +35,9 @@ model User {
   markedAttendances AttendanceRecord[] @relation("MarkedBy")
   attendanceRecords AttendanceRecord[] @relation("AgentAttendance")
 
+  auditsReceived AuditRecord[] @relation("AgentAudits")
+  auditsGiven    AuditRecord[] @relation("AuditorAudits")
+
   createdAt  DateTime @default(now())
 }
 
@@ -50,4 +53,25 @@ model AttendanceRecord {
   markedBy   User             @relation("MarkedBy", fields: [markedById], references: [id])
 
   @@unique([agentId, date])
+}
+
+model AuditRecord {
+  id           String   @id @default(cuid())
+  agentId      String
+  auditorId    String
+  customerName String
+  leadId       String?
+  callDate     DateTime @db.Date
+  callDuration String?
+  
+  scores       Json     // Map of item key to { score: number, remark?: string }
+  stepSubtotals Json    // Breakdown by step
+  totalScore   Float    // Total score out of 100
+  percentage   Float    // Overall percentage achieved
+  rating       String   // e.g., Excellent, Good, Needs Improvement, Poor
+
+  createdAt    DateTime @default(now())
+
+  agent        User     @relation("AgentAudits", fields: [agentId], references: [id])
+  auditor      User     @relation("AuditorAudits", fields: [auditorId], references: [id])
 }

@@ -116,12 +116,12 @@ export default async function DashboardPage({ searchParams }: Props) {
   const alreadySubmittedAgents = agents.length > 0 && agents.every((a) => recordMap.has(a.id));
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#F8F7F4] overflow-hidden">
       <Navbar userName={session.user.name} role={session.user.role as any} />
       <main className="flex-1 min-h-0 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 flex flex-col">
         <div className="mb-4 flex-shrink-0">
-          <h1 className="text-xl font-semibold text-gray-900">
-            {isAdmin ? "Admin: Mark Attendance" : "Mark Attendance"}
+          <h1 className="text-[#111111] font-bold text-lg">
+            Attendance
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {isAdmin

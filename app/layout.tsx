@@ -6,14 +6,14 @@ import { SessionProvider } from "@/components/SessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Attendance Manager",
-  description: "Team attendance tracking system",
+  title: "Attendance & Agent Audit Manager",
+  description: "Team attendance & agent call audit system",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
+      <body className={`${inter.className} bg-[#F8F7F4] text-[#121212] antialiased`}>
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>

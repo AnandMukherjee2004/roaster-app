@@ -218,6 +218,8 @@ export type UserWhereInput = {
   agents?: Prisma.UserListRelationFilter
   markedAttendances?: Prisma.AttendanceRecordListRelationFilter
   attendanceRecords?: Prisma.AttendanceRecordListRelationFilter
+  auditsReceived?: Prisma.AuditRecordListRelationFilter
+  auditsGiven?: Prisma.AuditRecordListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -234,6 +236,8 @@ export type UserOrderByWithRelationInput = {
   agents?: Prisma.UserOrderByRelationAggregateInput
   markedAttendances?: Prisma.AttendanceRecordOrderByRelationAggregateInput
   attendanceRecords?: Prisma.AttendanceRecordOrderByRelationAggregateInput
+  auditsReceived?: Prisma.AuditRecordOrderByRelationAggregateInput
+  auditsGiven?: Prisma.AuditRecordOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +257,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   agents?: Prisma.UserListRelationFilter
   markedAttendances?: Prisma.AttendanceRecordListRelationFilter
   attendanceRecords?: Prisma.AttendanceRecordListRelationFilter
+  auditsReceived?: Prisma.AuditRecordListRelationFilter
+  auditsGiven?: Prisma.AuditRecordListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -298,6 +304,8 @@ export type UserCreateInput = {
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -313,6 +321,8 @@ export type UserUncheckedCreateInput = {
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUpdateInput = {
@@ -328,6 +338,8 @@ export type UserUpdateInput = {
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -343,6 +355,8 @@ export type UserUncheckedUpdateInput = {
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -542,6 +556,34 @@ export type UserUpdateOneRequiredWithoutMarkedAttendancesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMarkedAttendancesInput, Prisma.UserUpdateWithoutMarkedAttendancesInput>, Prisma.UserUncheckedUpdateWithoutMarkedAttendancesInput>
 }
 
+export type UserCreateNestedOneWithoutAuditsReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsReceivedInput, Prisma.UserUncheckedCreateWithoutAuditsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutAuditsGivenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsGivenInput, Prisma.UserUncheckedCreateWithoutAuditsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuditsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsReceivedInput, Prisma.UserUncheckedCreateWithoutAuditsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsReceivedInput
+  upsert?: Prisma.UserUpsertWithoutAuditsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditsReceivedInput, Prisma.UserUpdateWithoutAuditsReceivedInput>, Prisma.UserUncheckedUpdateWithoutAuditsReceivedInput>
+}
+
+export type UserUpdateOneRequiredWithoutAuditsGivenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsGivenInput, Prisma.UserUncheckedCreateWithoutAuditsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsGivenInput
+  upsert?: Prisma.UserUpsertWithoutAuditsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditsGivenInput, Prisma.UserUpdateWithoutAuditsGivenInput>, Prisma.UserUncheckedUpdateWithoutAuditsGivenInput>
+}
+
 export type UserCreateWithoutAgentsInput = {
   id?: string
   name: string
@@ -554,6 +596,8 @@ export type UserCreateWithoutAgentsInput = {
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUncheckedCreateWithoutAgentsInput = {
@@ -568,6 +612,8 @@ export type UserUncheckedCreateWithoutAgentsInput = {
   createdAt?: Date | string
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
 }
 
 export type UserCreateOrConnectWithoutAgentsInput = {
@@ -587,6 +633,8 @@ export type UserCreateWithoutTeamLeadInput = {
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUncheckedCreateWithoutTeamLeadInput = {
@@ -601,6 +649,8 @@ export type UserUncheckedCreateWithoutTeamLeadInput = {
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
 }
 
 export type UserCreateOrConnectWithoutTeamLeadInput = {
@@ -636,6 +686,8 @@ export type UserUpdateWithoutAgentsInput = {
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAgentsInput = {
@@ -650,6 +702,8 @@ export type UserUncheckedUpdateWithoutAgentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutTeamLeadInput = {
@@ -695,6 +749,8 @@ export type UserCreateWithoutAttendanceRecordsInput = {
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUncheckedCreateWithoutAttendanceRecordsInput = {
@@ -709,6 +765,8 @@ export type UserUncheckedCreateWithoutAttendanceRecordsInput = {
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
 }
 
 export type UserCreateOrConnectWithoutAttendanceRecordsInput = {
@@ -728,6 +786,8 @@ export type UserCreateWithoutMarkedAttendancesInput = {
   teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
   agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
   attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
 }
 
 export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -742,6 +802,8 @@ export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
   createdAt?: Date | string
   agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
 }
 
 export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -772,6 +834,8 @@ export type UserUpdateWithoutAttendanceRecordsInput = {
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttendanceRecordsInput = {
@@ -786,6 +850,8 @@ export type UserUncheckedUpdateWithoutAttendanceRecordsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUpsertWithoutMarkedAttendancesInput = {
@@ -811,6 +877,8 @@ export type UserUpdateWithoutMarkedAttendancesInput = {
   teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -825,6 +893,168 @@ export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
+}
+
+export type UserCreateWithoutAuditsReceivedInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
+  createdAt?: Date | string
+  teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
+  agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
+  markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordCreateNestedManyWithoutAuditorInput
+}
+
+export type UserUncheckedCreateWithoutAuditsReceivedInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role: $Enums.Role
+  teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
+  createdAt?: Date | string
+  agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
+  markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsGiven?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAuditorInput
+}
+
+export type UserCreateOrConnectWithoutAuditsReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsReceivedInput, Prisma.UserUncheckedCreateWithoutAuditsReceivedInput>
+}
+
+export type UserCreateWithoutAuditsGivenInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role: $Enums.Role
+  joiningDate?: Date | string | null
+  empId?: string | null
+  createdAt?: Date | string
+  teamLead?: Prisma.UserCreateNestedOneWithoutAgentsInput
+  agents?: Prisma.UserCreateNestedManyWithoutTeamLeadInput
+  markedAttendances?: Prisma.AttendanceRecordCreateNestedManyWithoutMarkedByInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordCreateNestedManyWithoutAgentInput
+}
+
+export type UserUncheckedCreateWithoutAuditsGivenInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role: $Enums.Role
+  teamLeadId?: string | null
+  joiningDate?: Date | string | null
+  empId?: string | null
+  createdAt?: Date | string
+  agents?: Prisma.UserUncheckedCreateNestedManyWithoutTeamLeadInput
+  markedAttendances?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutMarkedByInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutAgentInput
+  auditsReceived?: Prisma.AuditRecordUncheckedCreateNestedManyWithoutAgentInput
+}
+
+export type UserCreateOrConnectWithoutAuditsGivenInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsGivenInput, Prisma.UserUncheckedCreateWithoutAuditsGivenInput>
+}
+
+export type UserUpsertWithoutAuditsReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditsReceivedInput, Prisma.UserUncheckedUpdateWithoutAuditsReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsReceivedInput, Prisma.UserUncheckedCreateWithoutAuditsReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditsReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditsReceivedInput, Prisma.UserUncheckedUpdateWithoutAuditsReceivedInput>
+}
+
+export type UserUpdateWithoutAuditsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
+  agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
+  markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
+  markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
+}
+
+export type UserUpsertWithoutAuditsGivenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditsGivenInput, Prisma.UserUncheckedUpdateWithoutAuditsGivenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsGivenInput, Prisma.UserUncheckedCreateWithoutAuditsGivenInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditsGivenInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditsGivenInput, Prisma.UserUncheckedUpdateWithoutAuditsGivenInput>
+}
+
+export type UserUpdateWithoutAuditsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamLead?: Prisma.UserUpdateOneWithoutAgentsNestedInput
+  agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
+  markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  teamLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
+  markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
 }
 
 export type UserCreateManyTeamLeadInput = {
@@ -850,6 +1080,8 @@ export type UserUpdateWithoutTeamLeadInput = {
   agents?: Prisma.UserUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamLeadInput = {
@@ -864,6 +1096,8 @@ export type UserUncheckedUpdateWithoutTeamLeadInput = {
   agents?: Prisma.UserUncheckedUpdateManyWithoutTeamLeadNestedInput
   markedAttendances?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutMarkedByNestedInput
   attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsReceived?: Prisma.AuditRecordUncheckedUpdateManyWithoutAgentNestedInput
+  auditsGiven?: Prisma.AuditRecordUncheckedUpdateManyWithoutAuditorNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutTeamLeadInput = {
@@ -886,12 +1120,16 @@ export type UserCountOutputType = {
   agents: number
   markedAttendances: number
   attendanceRecords: number
+  auditsReceived: number
+  auditsGiven: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   agents?: boolean | UserCountOutputTypeCountAgentsArgs
   markedAttendances?: boolean | UserCountOutputTypeCountMarkedAttendancesArgs
   attendanceRecords?: boolean | UserCountOutputTypeCountAttendanceRecordsArgs
+  auditsReceived?: boolean | UserCountOutputTypeCountAuditsReceivedArgs
+  auditsGiven?: boolean | UserCountOutputTypeCountAuditsGivenArgs
 }
 
 /**
@@ -925,6 +1163,20 @@ export type UserCountOutputTypeCountAttendanceRecordsArgs<ExtArgs extends runtim
   where?: Prisma.AttendanceRecordWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditRecordWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditRecordWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -940,6 +1192,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   agents?: boolean | Prisma.User$agentsArgs<ExtArgs>
   markedAttendances?: boolean | Prisma.User$markedAttendancesArgs<ExtArgs>
   attendanceRecords?: boolean | Prisma.User$attendanceRecordsArgs<ExtArgs>
+  auditsReceived?: boolean | Prisma.User$auditsReceivedArgs<ExtArgs>
+  auditsGiven?: boolean | Prisma.User$auditsGivenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -987,6 +1241,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   agents?: boolean | Prisma.User$agentsArgs<ExtArgs>
   markedAttendances?: boolean | Prisma.User$markedAttendancesArgs<ExtArgs>
   attendanceRecords?: boolean | Prisma.User$attendanceRecordsArgs<ExtArgs>
+  auditsReceived?: boolean | Prisma.User$auditsReceivedArgs<ExtArgs>
+  auditsGiven?: boolean | Prisma.User$auditsGivenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1003,6 +1259,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     agents: Prisma.$UserPayload<ExtArgs>[]
     markedAttendances: Prisma.$AttendanceRecordPayload<ExtArgs>[]
     attendanceRecords: Prisma.$AttendanceRecordPayload<ExtArgs>[]
+    auditsReceived: Prisma.$AuditRecordPayload<ExtArgs>[]
+    auditsGiven: Prisma.$AuditRecordPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1412,6 +1670,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   agents<T extends Prisma.User$agentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$agentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   markedAttendances<T extends Prisma.User$markedAttendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$markedAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attendanceRecords<T extends Prisma.User$attendanceRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attendanceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditsReceived<T extends Prisma.User$auditsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditsGiven<T extends Prisma.User$auditsGivenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditsGivenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1939,6 +2199,54 @@ export type User$attendanceRecordsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AttendanceRecordScalarFieldEnum | Prisma.AttendanceRecordScalarFieldEnum[]
+}
+
+/**
+ * User.auditsReceived
+ */
+export type User$auditsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditRecord
+   */
+  select?: Prisma.AuditRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditRecord
+   */
+  omit?: Prisma.AuditRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditRecordInclude<ExtArgs> | null
+  where?: Prisma.AuditRecordWhereInput
+  orderBy?: Prisma.AuditRecordOrderByWithRelationInput | Prisma.AuditRecordOrderByWithRelationInput[]
+  cursor?: Prisma.AuditRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditRecordScalarFieldEnum | Prisma.AuditRecordScalarFieldEnum[]
+}
+
+/**
+ * User.auditsGiven
+ */
+export type User$auditsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditRecord
+   */
+  select?: Prisma.AuditRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditRecord
+   */
+  omit?: Prisma.AuditRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditRecordInclude<ExtArgs> | null
+  where?: Prisma.AuditRecordWhereInput
+  orderBy?: Prisma.AuditRecordOrderByWithRelationInput | Prisma.AuditRecordOrderByWithRelationInput[]
+  cursor?: Prisma.AuditRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditRecordScalarFieldEnum | Prisma.AuditRecordScalarFieldEnum[]
 }
 
 /**

@@ -51,3 +51,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type AttendanceRecord = Prisma.AttendanceRecordModel
+/**
+ * Model AuditRecord
+ * 
+ */
+export type AuditRecord = Prisma.AuditRecordModel

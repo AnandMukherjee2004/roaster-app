@@ -76,26 +76,26 @@ export default async function AdminPage({ searchParams }: Props) {
   const notMarked = agents.length - records.length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F8F7F4]">
       <Navbar userName={session.user.name} role={session.user.role as any} />
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">View attendance across all teams</p>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-4">
+        <div>
+          <h1 className="text-lg font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-xs text-gray-500 mt-0.5">View attendance across all teams</p>
         </div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {[
-            { label: "Total Agents", value: agents.length, color: "text-gray-900" },
-            { label: "Present", value: present, color: "text-green-600" },
+            { label: "Total Agents", value: agents.length, color: "text-[#111111]" },
+            { label: "Present", value: present, color: "text-emerald-600" },
             { label: "Half Day", value: halfDay, color: "text-blue-600" },
-            { label: "Absent", value: absent, color: "text-red-500" },
-            { label: "Not Marked", value: notMarked, color: "text-amber-500" },
+            { label: "Absent", value: absent, color: "text-[#E0533C]" },
+            { label: "Not Marked", value: notMarked, color: "text-amber-600" },
           ].map((card) => (
-            <div key={card.label} className="bg-white border border-gray-100 rounded-xl p-4">
-              <p className="text-xs text-gray-500 mb-1">{card.label}</p>
-              <p className={`text-2xl font-semibold ${card.color}`}>{card.value}</p>
+            <div key={card.label} className="bg-white border border-stone-200/60 rounded-2xl p-4 shadow-2xs">
+              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">{card.label}</p>
+              <p className={`text-2xl font-black ${card.color}`}>{card.value}</p>
             </div>
           ))}
         </div>

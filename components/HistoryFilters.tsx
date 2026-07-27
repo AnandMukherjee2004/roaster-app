@@ -29,7 +29,7 @@ export default function HistoryFilters({ selectedDate, today, minDate, selectedT
   ];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4 flex flex-wrap gap-4 items-end">
+    <div className="bg-white border border-stone-200/60 rounded-2xl p-4 mb-4 flex flex-wrap gap-3 items-end shadow-2xs">
       <CustomDatePicker
         value={selectedDate}
         min={minDate}
