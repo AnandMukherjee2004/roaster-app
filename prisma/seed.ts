@@ -113,7 +113,7 @@ async function main() {
 
   const adminPassword = await bcrypt.hash("CRAxAnand@2004", 10);
   const sounakPassword = await bcrypt.hash("Sounak@2026", 10);
-  const managerPassword = await bcrypt.hash("manager123", 10);
+  const managerPassword = await bcrypt.hash("Ashwin@2026", 10);
   const agentPassword = await bcrypt.hash("agent123", 10);
 
   await prisma.user.create({
@@ -167,7 +167,7 @@ async function main() {
   console.log("\n✅ Seed complete!\n");
   console.log("  Admin:    anand.m@myfrido.com  /  CRAxAnand@2004");
   console.log("  Admin:    sounak.c@myfrido.com /  Sounak@2026");
-  console.log("  Manager:  ashwin.n@myfrido.com /  manager123");
+  console.log("  Manager:  ashwin.n@myfrido.com /  Ashwin@2026");
   for (const team of teams) {
     const tlFirstWord = team.tl.split(" ")[0];
     console.log(`  TL:       ${slugify(team.tl)}@myfrido.com  /  ${tlFirstWord}@2026`);
