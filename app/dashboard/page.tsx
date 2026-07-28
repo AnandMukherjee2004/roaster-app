@@ -71,6 +71,26 @@ export default async function DashboardPage({ searchParams }: Props) {
       orderBy: { name: "asc" },
       select: { id: true, name: true, email: true, empId: true },
     });
+
+    // Fallback if no specific TLs are mapped directly to this manager's ID
+    if (tls.length === 0 && agents.length === 0) {
+      tls = await prisma.user.findMany({
+        where: {
+          role: "TL",
+          OR: [
+            { teamLeadId: null },
+            { teamLead: { role: "MANAGER" } }
+          ]
+        },
+        orderBy: { name: "asc" },
+        select: { id: true, name: true, email: true, empId: true },
+      });
+      agents = await prisma.user.findMany({
+        where: { teamLead: { role: "TL" } },
+        orderBy: { name: "asc" },
+        select: { id: true, name: true, email: true, empId: true },
+      });
+    }
   } else {
     agents = await prisma.user.findMany({
       where: { teamLeadId: session.user.id },
