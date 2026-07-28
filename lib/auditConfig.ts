@@ -107,21 +107,21 @@ export const AUDIT_STEPS: ConsultationStep[] = [
 export const TOTAL_MAX_SCORE = 100;
 
 export function getAuditRating(percentage: number): { rating: string; color: string; badgeBg: string; textHex: string } {
-  if (percentage >= 85) {
+  if (percentage >= 90) {
     return {
       rating: "Excellent",
       color: "emerald",
       badgeBg: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-extrabold",
       textHex: "#34D399",
     };
-  } else if (percentage >= 70) {
+  } else if (percentage >= 75) {
     return {
       rating: "Good",
       color: "blue",
       badgeBg: "bg-blue-500/20 text-blue-300 border border-blue-500/40 font-extrabold",
       textHex: "#60A5FA",
     };
-  } else if (percentage >= 50) {
+  } else if (percentage >= 60) {
     return {
       rating: "Needs Improvement",
       color: "amber",
@@ -130,7 +130,7 @@ export function getAuditRating(percentage: number): { rating: string; color: str
     };
   } else {
     return {
-      rating: "Unsatisfactory",
+      rating: "Poor",
       color: "rose",
       badgeBg: "bg-rose-500/20 text-rose-300 border border-rose-500/40 font-extrabold",
       textHex: "#F87171",

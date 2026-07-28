@@ -144,7 +144,8 @@ export default function AuditForm({ agents, currentUserName, userRole, today, on
           onSuccess();
         } else {
           setTimeout(() => {
-            window.location.href = "/history?view=audits";
+            const redirectUrl = userRole === "TL" ? "/history?view=audits" : "/admin?section=audits";
+            window.location.href = redirectUrl;
           }, 1000);
         }
       }
